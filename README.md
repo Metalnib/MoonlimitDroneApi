@@ -5,7 +5,7 @@ This WebApi is version 2 and not fully compatible with v.1 (current GoLang app)
 **It is work in progress also**
 
 ## Get started:
-####1) Download Postgresql with GIS docker:
+####1 Download Postgresql with GIS docker:
 ```bash
 docker pull kartoza/postgis:13.0
 
@@ -13,13 +13,13 @@ docker volume create pg_data
 
 docker run --name=postgis -d -e POSTGRES_USER=metal -e POSTGRES_PASS=parolata -e POSTGRES_DBNAME=gis -e ALLOW_IP_RANGE=0.0.0.0/0 -p 5432:5432 -v pg_data:/var/lib/postgresql --restart=always kartoza/postgis:13.0
 ```
-####2) Fix your connection string
+####2 Fix your connection string
 In appsettings.json change ConnectionStrings Moonlimit.DroneAPIDB to localhost or network machine with Postgresql
 
-####3) Create Database schema and seed data
+####3 Create Database schema and seed data
 Run Moonlimit.DroneAPI.Api, this will open api/info endpoint and it will take care to create and migrate the database.
 
-####4) Take a look of Swager or Postman queries
+####4 Take a look of Swager or Postman queries
 Import Moonlimit.DroneAPI.postman_collection.json to your Postman
 
 To get JWT token call POST: api/token
@@ -30,7 +30,7 @@ with:
 "Password": "mysecretpassword123"
 }
 ```
-####5) Use api/user endpoint to create new user
+####5 Use api/user endpoint to create new user
 
 ## Known issues
 
