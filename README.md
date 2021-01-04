@@ -42,6 +42,8 @@ All linked entities are not loaded by the parent entity, even with disabled lazy
 
 ## Breaking changes from the old api
 
+* The Drone can have multiple network settings, object *DroneNetworkSettings* belongs to the *user* and not to only one drone. *Drone* has many-to-many relation ship with *DroneNetworkSettings*. NetworkSettings got new fields:  UseDHCP, Router(gataway) and IPAddress for manuel settings.
+
 * All new endpoints start with api, for example /drone/{id} is now /api/drone/{id}
 
 * Endpoints /drone/create /drone/edit and /drone/delete are removed. Use just /drone with http GET, POST, PUT and DELETE methods instead.
@@ -49,6 +51,8 @@ Same for other endpoints...
 
 * Coordinates in all objects (Latitude, Longitude and Altitude properties) are moved inside Point structure and it has X,Y and Z properties, where X is longitude. 
 The new property name is Coordinates for single point, or Points (a list) for area. 
+
+* Endpoints */drone/{droneid}/settings/onvif* and */drone/{droneid}/settings/network* are removed, use the separate controlers *onvif* and *networksettings*
 
 ## TODO
 
