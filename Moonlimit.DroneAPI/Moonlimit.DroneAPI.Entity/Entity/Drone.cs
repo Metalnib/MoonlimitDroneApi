@@ -26,6 +26,7 @@ namespace Moonlimit.DroneAPI.Entity
         public string Token { get; set; }
         public int OnvifSettingsId { get; set; }
         public DroneOnvifSettings OnvifSettings { get; set; }
+        public DroneNetworkSettings DroneOnboardNetwork { get; set; }
         public DateTime LastOnline { get; set; }
         public DroneStatusCode StatusCode { get; set; }
         public DroneFlightStatusCode FlightStatusCode { get; set; }

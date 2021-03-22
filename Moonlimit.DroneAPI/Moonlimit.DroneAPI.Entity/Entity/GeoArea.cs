@@ -15,6 +15,7 @@ namespace Moonlimit.DroneAPI.Entity
     {
         [Column(TypeName="geography")]
         public Point Coordinates { get; set; }
+        
     }
 
     public enum AreaKind { Unknoun, Avoid, Interest}
