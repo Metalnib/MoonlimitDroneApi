@@ -11,10 +11,10 @@ namespace Moonlimit.DroneAPI.Entity
     public class CompanyAccount : BaseEntity
     {
         [Required]
-        [StringLength(30)]
+        [StringLength(128)]
         public string Name { get; set; }
         [Required]
-        [StringLength(30)]
+        [StringLength(128)]
         public string Email { get; set; }
         [StringLength(255)]
         public string Description { get; set; }

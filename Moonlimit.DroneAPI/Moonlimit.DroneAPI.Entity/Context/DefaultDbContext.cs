@@ -51,7 +51,7 @@ namespace Moonlimit.DroneAPI.Entity.Context
             {
                 mapping.Map(modelBuilder);
             }
-            
+
             //Fluent API
 
             SetAdditionalConcurency(modelBuilder); ;

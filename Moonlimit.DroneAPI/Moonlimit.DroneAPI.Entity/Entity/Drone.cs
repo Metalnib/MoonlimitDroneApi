@@ -8,25 +8,26 @@ namespace Moonlimit.DroneAPI.Entity
 {
     public class Drone : BaseEntity
     {
-        [StringLength(255)]
+        [StringLength(128)]
         public string Name { get; set; }
-        [StringLength(255)]
+        [StringLength(128)]
         public string TagNumber { get; set; }
         [StringLength(255)]
         public string Owner { get; set; }
-        [StringLength(255)]
+        [StringLength(128)]
         public string PlatformCode { get; set; }
-        [StringLength(255)]
+        [StringLength(128)]
         public string OnboardCode { get; set; }
         public int UserId { get; set; }
         public int AssignedMissionId { get; set; }
-        public Mission AssignledMission { get; set; }
+        public Mission AssignedMission { get; set; }
         [Required]
         [StringLength(255)]
         public string Token { get; set; }
         public int OnvifSettingsId { get; set; }
         public DroneOnvifSettings OnvifSettings { get; set; }
-        public DroneNetworkSettings DroneOnboardNetwork { get; set; }
+        public int BoardNetworkId { get; set; }
+        public BoardNetwork BoardNetwork { get; set; }
         public DateTime LastOnline { get; set; }
         public DroneStatusCode StatusCode { get; set; }
         public DroneFlightStatusCode FlightStatusCode { get; set; }

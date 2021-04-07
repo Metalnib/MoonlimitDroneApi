@@ -12,16 +12,16 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Moonlimit.DroneAPI.Entity.Migrations
 {
     [DbContext(typeof(DefaultDbContext))]
-    [Migration("20210103154300_InitialCreate")]
+    [Migration("20210407174146_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityByDefaultColumns()
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("ProductVersion", "5.0.5")
+                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
             modelBuilder.Entity("DroneDroneNetworkSettings", b =>
                 {
@@ -42,13 +42,77 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     b.ToTable("drone_drone_network_settings");
                 });
 
+            modelBuilder.Entity("Moonlimit.DroneAPI.Entity.BoardNetwork", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasColumnName("id")
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("deleted_at");
+
+                    b.Property<string>("Encryption")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("encryption");
+
+                    b.Property<string>("IpAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)")
+                        .HasColumnName("ip_address");
+
+                    b.Property<DateTime?>("ModifiedAt")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("modified_at");
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("password");
+
+                    b.Property<string>("SsId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("ss_id");
+
+                    b.Property<string>("SubnetMask")
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
+                        .HasColumnName("subnet_mask");
+
+                    b.Property<string>("TestText")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("test_text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
+
+                    b.Property<long>("xmin")
+                        .HasColumnType("bigint")
+                        .HasColumnName("xmin");
+
+                    b.HasKey("Id")
+                        .HasName("pk_board_network");
+
+                    b.ToTable("board_network");
+                });
+
             modelBuilder.Entity("Moonlimit.DroneAPI.Entity.CompanyAccount", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -67,8 +131,8 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("email");
 
                     b.Property<bool>("IsActive")
@@ -85,8 +149,8 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("name");
 
                     b.Property<DateTime>("SetActive")
@@ -119,15 +183,15 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("AssignedMissionId")
                         .HasColumnType("integer")
                         .HasColumnName("assigned_mission_id");
 
-                    b.Property<int?>("AssignledMissionId")
+                    b.Property<int>("BoardNetworkId")
                         .HasColumnType("integer")
-                        .HasColumnName("assignled_mission_id");
+                        .HasColumnName("board_network_id");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -152,13 +216,13 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("modified_at");
 
                     b.Property<string>("Name")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("name");
 
                     b.Property<string>("OnboardCode")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("onboard_code");
 
                     b.Property<int>("OnvifSettingsId")
@@ -171,8 +235,8 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("owner");
 
                     b.Property<string>("PlatformCode")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("platform_code");
 
                     b.Property<int>("StatusCode")
@@ -180,8 +244,8 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("status_code");
 
                     b.Property<string>("TagNumber")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("tag_number");
 
                     b.Property<string>("TestText")
@@ -208,8 +272,11 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     b.HasKey("Id")
                         .HasName("pk_drones");
 
-                    b.HasIndex("AssignledMissionId")
-                        .HasDatabaseName("ix_drones_assignled_mission_id");
+                    b.HasIndex("AssignedMissionId")
+                        .HasDatabaseName("ix_drones_assigned_mission_id");
+
+                    b.HasIndex("BoardNetworkId")
+                        .HasDatabaseName("ix_drones_board_network_id");
 
                     b.HasIndex("DeletedAt")
                         .HasDatabaseName("ix_drones_deleted_at");
@@ -236,7 +303,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -313,7 +380,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -363,7 +430,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<bool>("Armed")
                         .HasColumnType("boolean")
@@ -453,7 +520,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("Action")
                         .HasColumnType("integer")
@@ -507,7 +574,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -525,46 +592,41 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("dns_hostname");
 
                     b.Property<string>("Encryption")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("encryption");
 
                     b.Property<string>("IpAddress")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)")
                         .HasColumnName("ip_address");
 
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("modified_at");
 
-                    b.Property<string>("NetworkInterface")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
-                        .HasColumnName("network_interface");
-
                     b.Property<short>("Order")
                         .HasColumnType("smallint")
                         .HasColumnName("order");
 
                     b.Property<string>("Password")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("password");
 
                     b.Property<string>("Router")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
                         .HasColumnName("router");
 
                     b.Property<string>("SsId")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("ss_id");
 
                     b.Property<string>("SubnetMask")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(16)
+                        .HasColumnType("character varying(16)")
                         .HasColumnName("subnet_mask");
 
                     b.Property<string>("TestText")
@@ -601,7 +663,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -617,13 +679,18 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("enabled");
 
+                    b.Property<string>("ListeningAddress")
+                        .HasMaxLength(45)
+                        .HasColumnType("character varying(45)")
+                        .HasColumnName("listening_address");
+
                     b.Property<DateTime?>("ModifiedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("modified_at");
 
                     b.Property<string>("Password")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("password");
 
                     b.Property<int>("ServicePort")
@@ -636,8 +703,8 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("test_text");
 
                     b.Property<string>("UserName")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
                         .HasColumnName("user_name");
 
                     b.Property<uint>("xmin")
@@ -661,7 +728,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -721,7 +788,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<Point>("Coordinates")
                         .HasColumnType("geography")
@@ -774,7 +841,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -855,7 +922,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -917,11 +984,11 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasColumnName("id")
-                        .UseIdentityByDefaultColumn();
+                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Code")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("code");
 
                     b.Property<int>("CompanyAccountId")
@@ -945,14 +1012,14 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("email");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
                         .HasColumnName("first_name");
 
                     b.Property<bool>("IsActive")
@@ -965,8 +1032,8 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
 
                     b.Property<string>("LastName")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("character varying(20)")
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
                         .HasColumnName("last_name");
 
                     b.Property<DateTime?>("ModifiedAt")
@@ -974,8 +1041,8 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("modified_at");
 
                     b.Property<string>("Password")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
                         .HasColumnName("password");
 
                     b.Property<string>("Roles")
@@ -990,8 +1057,8 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
 
                     b.Property<string>("UserName")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("character varying(30)")
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
                         .HasColumnName("user_name");
 
                     b.Property<uint>("xmin")
@@ -1035,10 +1102,19 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
 
             modelBuilder.Entity("Moonlimit.DroneAPI.Entity.Drone", b =>
                 {
-                    b.HasOne("Moonlimit.DroneAPI.Entity.Mission", "AssignledMission")
+                    b.HasOne("Moonlimit.DroneAPI.Entity.Mission", "AssignedMission")
                         .WithMany()
-                        .HasForeignKey("AssignledMissionId")
-                        .HasConstraintName("fk_drones_missions_assignled_mission_id");
+                        .HasForeignKey("AssignedMissionId")
+                        .HasConstraintName("fk_drones_missions_assigned_mission_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Moonlimit.DroneAPI.Entity.BoardNetwork", "BoardNetwork")
+                        .WithMany()
+                        .HasForeignKey("BoardNetworkId")
+                        .HasConstraintName("fk_drones_board_network_board_network_id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Moonlimit.DroneAPI.Entity.DroneOnvifSettings", "OnvifSettings")
                         .WithMany()
@@ -1047,7 +1123,9 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("AssignledMission");
+                    b.Navigation("AssignedMission");
+
+                    b.Navigation("BoardNetwork");
 
                     b.Navigation("OnvifSettings");
                 });

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Identity;
+
 namespace Moonlimit.DroneAPI.Api.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
@@ -24,6 +26,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         public DroneController(DroneService<DroneViewModel, Drone> droneService)
         {
             _droneService = droneService;
+            var d = User;
         }
 		
 	    //get all
