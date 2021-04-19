@@ -48,6 +48,10 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int>("CompanyAccountId")
+                        .HasColumnType("integer")
+                        .HasColumnName("company_account_id");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("created_at");
@@ -55,6 +59,10 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("deleted_at");
+
+                    b.Property<bool>("Enabled")
+                        .HasColumnType("boolean")
+                        .HasColumnName("enabled");
 
                     b.Property<string>("Encryption")
                         .HasMaxLength(128)
@@ -183,13 +191,17 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("AssignedMissionId")
+                    b.Property<int?>("AssignedMissionId")
                         .HasColumnType("integer")
                         .HasColumnName("assigned_mission_id");
 
-                    b.Property<int>("BoardNetworkId")
+                    b.Property<int?>("BoardNetworkId")
                         .HasColumnType("integer")
                         .HasColumnName("board_network_id");
+
+                    b.Property<int>("CompanyAccountId")
+                        .HasColumnType("integer")
+                        .HasColumnName("company_account_id");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -223,7 +235,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnType("character varying(128)")
                         .HasColumnName("onboard_code");
 
-                    b.Property<int>("OnvifSettingsId")
+                    b.Property<int?>("OnvifSettingsId")
                         .HasColumnType("integer")
                         .HasColumnName("onvif_settings_id");
 
@@ -574,6 +586,10 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int>("CompanyAccountId")
+                        .HasColumnType("integer")
+                        .HasColumnName("company_account_id");
+
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone")
@@ -663,6 +679,10 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
+                    b.Property<int>("CompanyAccountId")
+                        .HasColumnType("integer")
+                        .HasColumnName("company_account_id");
+
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("timestamp without time zone")
@@ -699,6 +719,10 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)")
                         .HasColumnName("test_text");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("integer")
+                        .HasColumnName("user_id");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(64)
@@ -840,6 +864,10 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         .HasColumnType("integer")
                         .HasColumnName("id")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+
+                    b.Property<int>("CompanyAccountId")
+                        .HasColumnType("integer")
+                        .HasColumnName("company_account_id");
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -1103,23 +1131,17 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     b.HasOne("Moonlimit.DroneAPI.Entity.Mission", "AssignedMission")
                         .WithMany()
                         .HasForeignKey("AssignedMissionId")
-                        .HasConstraintName("fk_drones_missions_assigned_mission_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("fk_drones_missions_assigned_mission_id");
 
                     b.HasOne("Moonlimit.DroneAPI.Entity.BoardNetwork", "BoardNetwork")
                         .WithMany()
                         .HasForeignKey("BoardNetworkId")
-                        .HasConstraintName("fk_drones_board_network_board_network_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("fk_drones_board_network_board_network_id");
 
                     b.HasOne("Moonlimit.DroneAPI.Entity.DroneOnvifSettings", "OnvifSettings")
                         .WithMany()
                         .HasForeignKey("OnvifSettingsId")
-                        .HasConstraintName("fk_drones_drone_onvif_settings_onvif_settings_id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasConstraintName("fk_drones_drone_onvif_settings_onvif_settings_id");
 
                     b.Navigation("AssignedMission");
 

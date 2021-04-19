@@ -27,10 +27,21 @@ namespace Moonlimit.DroneAPI.Entity.Repository
         {
             return _unitOfWork.Context.Set<T>();
         }
+        
+        public IQueryable<T> GetAllQueryable()
+        {
+            return _unitOfWork.Context.Set<T>().AsQueryable();
+        }
         public IEnumerable<T> Get(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
         {
             return _unitOfWork.Context.Set<T>().Where(predicate).AsEnumerable<T>();
         }
+        
+        public IQueryable<T> GetQueryable(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
+        {
+            return _unitOfWork.Context.Set<T>().Where(predicate).AsQueryable<T>();
+        }
+        
         public T GetOne(System.Linq.Expressions.Expression<Func<T, bool>> predicate)
         {
             return _unitOfWork.Context.Set<T>().Where(predicate).FirstOrDefault();

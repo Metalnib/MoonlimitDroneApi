@@ -50,7 +50,9 @@ namespace JWT.Controllers
         {
 
             List<Claim> claims = new List<Claim>();
-            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.Name));
+            claims.Add(new Claim("user_id", user.Id.ToString() ?? ""));
+            claims.Add(new Claim("account_id", user.AccountId.ToString() ?? ""));
+            claims.Add(new Claim(JwtRegisteredClaimNames.Sub, user.AccountId.ToString() ?? ""));
             claims.Add(new Claim(JwtRegisteredClaimNames.Email, user.Email));
             claims.Add(new Claim(JwtRegisteredClaimNames.Birthdate, user.Birthdate.ToString("yyyy-MM-dd")));
             claims.Add(new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()));
@@ -81,7 +83,8 @@ namespace JWT.Controllers
             var userView = _userService.Get(x => x.UserName == login.Username).SingleOrDefault();
             if (userView != null && userView.Password == login.Password)
             {
-                user = new UserModel { Name = userView.FirstName + " " + userView.LastName, Email = userView.Email, Roles = new string[] { } };
+                user = new UserModel { Id = userView.Id, AccountId = userView.CompanyAccountId, 
+                            Name = userView.FirstName + " " + userView.LastName, Email = userView.Email, Roles = new string[] { } };
                 foreach (string role in userView.Roles) user.Roles = new List<string>(user.Roles) { role }.ToArray();
                 if (userView.IsAdminRole) user.Roles = new List<string>(user.Roles) { "Administrator" }.ToArray();
             }
@@ -97,6 +100,8 @@ namespace JWT.Controllers
 
         private class UserModel
         {
+            public int Id { get; set; }
+            public int AccountId { get; set; }
             public string Name { get; set; }
             public string Email { get; set; }
             public DateTime Birthdate { get; set; }

@@ -108,6 +108,7 @@ namespace IdentityServer
     public class User
     {
         public int UserId { get; set; }
+        public int AccountId { get; set; }
         public string ClientId { get; set; }
         public string Provider { get; set; }
         public string FirstName { get; set; }

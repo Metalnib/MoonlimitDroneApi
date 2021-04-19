@@ -26,6 +26,7 @@ namespace Moonlimit.DroneAPI.Domain.Mapping
 
             CreateMap<Drone, DroneViewModel>().ReverseMap();
             CreateMap<Mission, MissionViewModel>().ReverseMap();
+            CreateMap<BoardNetwork, BoardNetworkViewModel>().ReverseMap();
             CreateMap<DroneNetworkSettings, DroneNetworkSettingsViewModel>().ReverseMap();
 
             //call code in partial scaffolded function

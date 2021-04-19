@@ -194,6 +194,11 @@ namespace Moonlimit.DroneAPI.Api
                 //
                 services.AddTransient(typeof(IService<,>), typeof(GenericService<,>));
                 services.AddTransient(typeof(IServiceAsync<,>), typeof(GenericServiceAsync<,>));
+                services.AddHttpContextAccessor();
+                services.AddScoped<IClaimsData, HttpClaimsData>();
+                services.AddScoped<IClaimValidator<Drone>, BasicClaimValidator<Drone>>();
+                services.AddScoped<IClaimValidator<DroneNetworkSettings>, BasicClaimValidator<DroneNetworkSettings>>();
+                services.AddScoped<IClaimValidator<Mission>, BasicClaimValidator<Mission>>();
                 #endregion
 
                 //data mapper services configuration

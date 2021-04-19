@@ -14,6 +14,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
     using Serilog;
     using Moonlimit.DroneAPI.Entity;
     using Moonlimit.DroneAPI.Entity.DroneCom;
+    using Microsoft.Extensions.Options;
     
 
     [ApiVersion("1.0")]
@@ -22,6 +23,8 @@ namespace Moonlimit.DroneAPI.Api.Controllers
     [ApiController]
     public class DroneController : ControllerBase
     {
+        public const string FullAccessRoles = "Administrator,Owner,Manager";
+        public const string UpdateAccessRoles = "Administrator,Owner,Manager";
         private readonly DroneService<DroneViewModel, Drone> _droneService;
         public DroneController(DroneService<DroneViewModel, Drone> droneService)
         {
@@ -54,7 +57,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         }
 
         //add
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = FullAccessRoles)]
         [HttpPost]
         public IActionResult Create([FromBody] DroneViewModel drone)
         {
@@ -66,7 +69,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         }
 
         //update
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = UpdateAccessRoles)]
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] DroneViewModel drone)
         {
@@ -83,7 +86,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         }
 
         //delete 
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = FullAccessRoles)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {

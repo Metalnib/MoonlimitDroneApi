@@ -19,7 +19,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    enabled = table.Column<bool>(type: "boolean", nullable: false),
                     ss_id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     encryption = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     password = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
@@ -29,7 +29,9 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     modified_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     xmin = table.Column<long>(type: "bigint", nullable: false),
-                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
+                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    company_account_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -85,7 +87,6 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                 {
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    user_id = table.Column<int>(type: "integer", nullable: false),
                     ss_id = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     use_dhcp = table.Column<bool>(type: "boolean", nullable: false),
                     encryption = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
@@ -99,7 +100,9 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     modified_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
-                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
+                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    company_account_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -121,7 +124,9 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     modified_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
-                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
+                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    company_account_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -271,11 +276,10 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     owner = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     platform_code = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
                     onboard_code = table.Column<string>(type: "character varying(128)", maxLength: 128, nullable: true),
-                    user_id = table.Column<int>(type: "integer", nullable: false),
-                    assigned_mission_id = table.Column<int>(type: "integer", nullable: false),
+                    assigned_mission_id = table.Column<int>(type: "integer", nullable: true),
                     token = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    onvif_settings_id = table.Column<int>(type: "integer", nullable: false),
-                    board_network_id = table.Column<int>(type: "integer", nullable: false),
+                    onvif_settings_id = table.Column<int>(type: "integer", nullable: true),
+                    board_network_id = table.Column<int>(type: "integer", nullable: true),
                     last_online = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
                     status_code = table.Column<int>(type: "integer", nullable: false),
                     flight_status_code = table.Column<int>(type: "integer", nullable: false),
@@ -283,7 +287,9 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     modified_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
-                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
+                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    company_account_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -293,13 +299,13 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                         column: x => x.board_network_id,
                         principalTable: "board_network",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "fk_drones_drone_onvif_settings_onvif_settings_id",
                         column: x => x.onvif_settings_id,
                         principalTable: "drone_onvif_settings",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -352,7 +358,6 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    user_id = table.Column<int>(type: "integer", nullable: false),
                     mission_area_id = table.Column<int>(type: "integer", nullable: false),
                     type_code = table.Column<int>(type: "integer", nullable: false),
                     target_altitude = table.Column<float>(type: "real", nullable: false),
@@ -362,7 +367,9 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                     modified_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     deleted_at = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
                     xmin = table.Column<uint>(type: "xid", rowVersion: true, nullable: false),
-                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
+                    test_text = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    user_id = table.Column<int>(type: "integer", nullable: false),
+                    company_account_id = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -559,7 +566,7 @@ namespace Moonlimit.DroneAPI.Entity.Migrations
                 column: "assigned_mission_id",
                 principalTable: "missions",
                 principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Restrict);
 
             migrationBuilder.AddForeignKey(
                 name: "fk_geo_points_geo_areas_geo_area_id",

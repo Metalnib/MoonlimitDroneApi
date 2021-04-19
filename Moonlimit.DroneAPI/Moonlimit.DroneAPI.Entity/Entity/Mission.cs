@@ -5,11 +5,10 @@ using NetTopologySuite.Geometries;
 
 namespace Moonlimit.DroneAPI.Entity
 {
-    public class Mission : BaseEntity
+    public class Mission : OwnedEntity
     {
         [StringLength(255)]
         public string Name { get; set; }
-        public int UserId { get; set; }
         public int MissionAreaId { get; set; }
         public int TypeCode { get; set; }
         public float TargetAltitude { get; set; }

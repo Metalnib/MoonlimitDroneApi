@@ -10,12 +10,12 @@ namespace Moonlimit.DroneAPI.Domain.Service
     /// A DroneNetworkSettings service
     ///       
     /// </summary>
-    public class DroneNetworkSettingsService<Tv, Te> : GenericService<Tv, Te>
+    public class DroneNetworkSettingsService<Tv, Te> : OwnedGenericService<Tv, Te>
         where Tv : DroneNetworkSettingsViewModel
         where Te : DroneNetworkSettings
     {
         
-        public DroneNetworkSettingsService(IUnitOfWork unitOfWork, IMapper mapper)
+        public DroneNetworkSettingsService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> validator):base(unitOfWork,mapper,validator)
         {
             if (_unitOfWork == null)
                 _unitOfWork = unitOfWork;

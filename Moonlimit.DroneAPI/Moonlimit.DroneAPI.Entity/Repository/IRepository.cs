@@ -11,6 +11,7 @@ namespace Moonlimit.DroneAPI.Entity.Repository
     {
         IEnumerable<T> GetAll();
         IEnumerable<T> Get(Expression<Func<T, bool>> predicate);
+        IQueryable<T> GetQueryable(System.Linq.Expressions.Expression<Func<T, bool>> predicate);
         T GetOne(Expression<Func<T, bool>> predicate);
         void Insert(T entity);
         void Delete(T entity);

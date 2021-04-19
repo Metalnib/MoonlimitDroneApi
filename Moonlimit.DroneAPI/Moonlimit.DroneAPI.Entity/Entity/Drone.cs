@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Moonlimit.DroneAPI.Entity
 {
-    public class Drone : BaseEntity
+    public class Drone : OwnedEntity
     {
         [StringLength(128)]
         public string Name { get; set; }
@@ -18,15 +18,14 @@ namespace Moonlimit.DroneAPI.Entity
         public string PlatformCode { get; set; }
         [StringLength(128)]
         public string OnboardCode { get; set; }
-        public int UserId { get; set; }
-        public int AssignedMissionId { get; set; }
+        public int? AssignedMissionId { get; set; }
         public Mission AssignedMission { get; set; }
         [Required]
         [StringLength(255)]
         public string Token { get; set; }
-        public int OnvifSettingsId { get; set; }
+        public int? OnvifSettingsId { get; set; }
         public DroneOnvifSettings OnvifSettings { get; set; }
-        public int BoardNetworkId { get; set; }
+        public int? BoardNetworkId { get; set; }
         public BoardNetwork BoardNetwork { get; set; }
         public DateTime LastOnline { get; set; }
         public DroneStatusCode StatusCode { get; set; }

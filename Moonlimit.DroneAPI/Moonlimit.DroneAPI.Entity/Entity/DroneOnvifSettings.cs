@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Moonlimit.DroneAPI.Entity
 {
-    public class DroneOnvifSettings : BaseEntity
+    public class DroneOnvifSettings : OwnedEntity
     {
         public bool Enabled { get; set; }
         [StringLength(64)]

@@ -12,5 +12,32 @@
     "IsActive": true,
     "Password": "8OjgUzL7UtzZ63SLpbW36JP9TCQR0u07C9g7NT3dApDI9zfBG9gIoK14rMR/UAUz",
     "CompanyAccountId": 1
+  },
+  {
+    "Created": "1/1/2020",
+    "Modified": "1/1/2020",
+    "FirstName": "Manager",
+    "LastName": "TestF",
+    "UserName": "Manager@email.com",
+    "Email": "Manager@email.com",
+    "Description": " ",
+    "IsAdminRole": false,
+    "Roles": "Manager",
+    "IsActive": true,
+    "Password": "8OjgUzL7UtzZ63SLpbW36JP9TCQR0u07C9g7NT3dApDI9zfBG9gIoK14rMR/UAUz",
+    "CompanyAccountId": 1
+  },
+  {
+    "Created": "1/1/2020",
+    "Modified": "1/1/2020",
+    "FirstName": "Operator",
+    "LastName": "limit",
+    "UserName": "operator@email.com",
+    "Email": "operator@email.com",
+    "Description": " ",
+    "IsAdminRole": false,
+    "IsActive": true,
+    "Password": "8OjgUzL7UtzZ63SLpbW36JP9TCQR0u07C9g7NT3dApDI9zfBG9gIoK14rMR/UAUz",
+    "CompanyAccountId": 1
   }
 ]

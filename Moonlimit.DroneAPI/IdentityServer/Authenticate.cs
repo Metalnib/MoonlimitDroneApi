@@ -61,6 +61,7 @@ namespace IdentityServer
             List<Claim> claims = new List<Claim>
             {
             new Claim("user_id", user.UserId.ToString() ?? ""),
+            new Claim(JwtClaimTypes.Subject, user.AccountId.ToString() ?? ""),
             new Claim(JwtClaimTypes.Name, (!string.IsNullOrEmpty(user.FirstName) && !string.IsNullOrEmpty(user.LastName)) ? (user.FirstName + " " + user.LastName) : ""),
             new Claim(JwtClaimTypes.GivenName, user.FirstName  ?? ""),
             new Claim(JwtClaimTypes.FamilyName, user.LastName  ?? ""),
@@ -122,7 +123,7 @@ namespace IdentityServer
                 }
                 catch (Exception ex)
                 {
-                    throw ex;
+                    throw new Exception("Authentication exception",ex);
                 }
             });
         }

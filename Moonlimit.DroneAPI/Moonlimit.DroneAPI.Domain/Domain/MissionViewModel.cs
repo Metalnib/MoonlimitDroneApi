@@ -1,6 +1,6 @@
 namespace Moonlimit.DroneAPI.Domain
 {
-    public class MissionViewModel : BaseDomain
+    public class MissionViewModel : OwnedDomain
     {
         public string Name { get; set; } 
         public int UserId { get; set; } 

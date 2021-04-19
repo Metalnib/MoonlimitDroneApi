@@ -6,9 +6,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Moonlimit.DroneAPI.Entity
 {
-    public class BoardNetwork : BaseEntity
+    public class BoardNetwork : OwnedEntity
     {
-        public int UserId { get; set; }
+        public bool Enabled { get; set; }
         [StringLength(128)]
         public string SsId { get; set; }
         [StringLength(128)]

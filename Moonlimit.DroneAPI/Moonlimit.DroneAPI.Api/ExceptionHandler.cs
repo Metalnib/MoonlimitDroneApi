@@ -31,7 +31,7 @@ namespace Moonlimit.DroneAPI.Api
             {
                 await HandleExceptionAsync(context, ex);
                 if (Startup.Configuration["Exception:ThrowExceptionAfterLog"] == "True")
-                    throw ex;
+                    throw;
             }
         }
 

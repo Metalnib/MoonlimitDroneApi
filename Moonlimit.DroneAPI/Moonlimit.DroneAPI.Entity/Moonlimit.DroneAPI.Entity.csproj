@@ -16,11 +16,12 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
     <PackageReference Include="NetTopologySuite" Version="2.2.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL.NetTopologySuite" Version="5.0.2" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <None Update="1_t4EntityHelpersGenerate.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -35,7 +36,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Folder Include="Migrations" />
   </ItemGroup>
 
 </Project>

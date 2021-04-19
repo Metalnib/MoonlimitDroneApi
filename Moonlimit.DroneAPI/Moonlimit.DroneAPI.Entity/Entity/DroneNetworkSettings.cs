@@ -4,9 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Moonlimit.DroneAPI.Entity
 {
-    public class DroneNetworkSettings : BaseEntity
+    public class DroneNetworkSettings : OwnedEntity
     {
-        public int UserId { get; set; }
         [StringLength(128)]
         public string SsId { get; set; }
         public bool UseDhcp { get; set; }

@@ -17,6 +17,8 @@ namespace Moonlimit.DroneAPI.Api.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+        public const string FullAccessRoles = "Administrator,Owner";
+        public const string UpdateAccessRoles = "Administrator,Owner";
         private readonly UserService<UserViewModel, User> _userService;
         public UserController(UserService<UserViewModel, User> userService)
         {
@@ -24,7 +26,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         }
 
         //get all
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet]
         public IEnumerable<UserViewModel> GetAll()
         {
@@ -57,7 +59,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         }
 
         //add
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = FullAccessRoles)]
         [HttpPost]
         public IActionResult Create([FromBody] UserViewModel user)
         {
@@ -65,11 +67,12 @@ namespace Moonlimit.DroneAPI.Api.Controllers
                 return BadRequest();
 
             var id = _userService.Add(user);
+            if (id < 0) return Unauthorized();
             return Created($"api/User/{id}", id);  //HTTP201 Resource created
         }
 
         //update
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = UpdateAccessRoles)]
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UserViewModel user)
         {
@@ -86,7 +89,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         }
 
         //delete
-        [Authorize(Roles = "Administrator")]
+        [Authorize(Roles = FullAccessRoles)]
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -108,7 +111,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
             return Ok(items);
         }
         
-        [Authorize]
+        [Authorize(Roles = FullAccessRoles)]
         [HttpGet("UpdateEmailbyUsername/{username}/{email}")]
         public IActionResult UpdateEmailbyUsername(string username, string email)
         {

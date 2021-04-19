@@ -6,6 +6,7 @@ using System.Text;
 
 namespace Moonlimit.DroneAPI.Entity
 {
+    //TODO: Change this implementation to more secure KeyDerivation.Pbkdf2 https://docs.microsoft.com/en-us/aspnet/core/security/data-protection/consumer-apis/password-hashing?view=aspnetcore-5.0
     public static class EntityHelper
     {
         static readonly String _EncryptionKey = "solenaMandja"; //TODO: Change this on production

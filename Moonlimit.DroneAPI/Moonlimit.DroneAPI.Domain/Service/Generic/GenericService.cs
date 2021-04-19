@@ -53,7 +53,6 @@ namespace Moonlimit.DroneAPI.Domain.Service
             return _unitOfWork.Save();
         }
 
-
         public virtual int Remove(int id)
         {
             Te entity = _unitOfWork.Context.Set<Te>().Find(id);

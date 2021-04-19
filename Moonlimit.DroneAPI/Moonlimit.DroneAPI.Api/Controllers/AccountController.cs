@@ -39,7 +39,6 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         [HttpGet("GetActiveByName/{name}")]
         public IActionResult GetActiveByName(string name)
         {
-            var b = this.User.Claims;
             var items = _companyAccountService.Get(a => a.IsActive && a.Name == name);
             return Ok(items);
         }

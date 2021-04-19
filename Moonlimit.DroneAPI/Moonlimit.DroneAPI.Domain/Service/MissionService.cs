@@ -13,12 +13,12 @@ namespace Moonlimit.DroneAPI.Domain.Service
     /// A Mission service
     ///       
     /// </summary>
-    public class MissionService<Tv, Te> : GenericService<Tv, Te>
+    public class MissionService<Tv, Te> : OwnedGenericService<Tv, Te>
         where Tv : MissionViewModel
         where Te : Mission
     {
         
-        public MissionService(IUnitOfWork unitOfWork, IMapper mapper)
+        public MissionService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> validator):base(unitOfWork,mapper,validator)
         {
             if (_unitOfWork == null)
                 _unitOfWork = unitOfWork;

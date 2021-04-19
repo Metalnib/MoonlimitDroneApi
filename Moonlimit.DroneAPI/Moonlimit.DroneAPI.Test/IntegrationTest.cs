@@ -829,8 +829,7 @@ namespace Moonlimit.DroneAPI.Test
             var response = await client.PostAsync("/api/userasync", new StringContent(
                                                                JsonConvert.SerializeObject(user), Encoding.UTF8, "application/json"));
             var jsonString = await response.Content.ReadAsStringAsync();
-            int lastAdded = 0;
-            int.TryParse(jsonString, out lastAdded);
+            int.TryParse(jsonString, out var lastAdded);
             return lastAdded;
         }
         public async Task<UserViewModel> GetUser(HttpClient client, int id)
