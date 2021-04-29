@@ -20,6 +20,7 @@ using System.Threading.Tasks;
 using Serilog;
 using Moonlimit.DroneAPI.Entity;
 using Moonlimit.DroneAPI.Entity.DroneCom;
+using System;
 
 namespace Moonlimit.DroneAPI.Api.Controllers
 {
@@ -55,7 +56,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //get one
         [Authorize]
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Int64 id)
         {
             var item = _objectdetectionService.GetOne(id);
             if (item == null)
@@ -82,7 +83,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //update
         [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] ObjectDetectionViewModel objectdetection)
+        public IActionResult Update(Int64 id, [FromBody] ObjectDetectionViewModel objectdetection)
         {
             if (objectdetection == null || objectdetection.Id != id)
                 return BadRequest();
@@ -99,7 +100,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //delete 
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Int64 id)
         {
 	    var retVal = _objectdetectionService.Remove(id);
 	    if (retVal == 0)

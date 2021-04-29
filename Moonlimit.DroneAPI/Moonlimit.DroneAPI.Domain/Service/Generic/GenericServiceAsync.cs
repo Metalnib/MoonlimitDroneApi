@@ -32,14 +32,14 @@ namespace Moonlimit.DroneAPI.Domain.Service
             return _mapper.Map<IEnumerable<Tv>>(source: entities);
         }
 
-        public virtual async Task<Tv> GetOne(int id)
+        public virtual async Task<Tv> GetOne(Int64 id)
         {
             var entity = await _unitOfWork.GetRepositoryAsync<Te>()
                 .GetOne(predicate: x => x.Id == id);
             return _mapper.Map<Tv>(source: entity);
         }
 
-        public virtual async Task<int> Add(Tv view)
+        public virtual async Task<Int64> Add(Tv view)
         {
             var entity = _mapper.Map<Te>(source: view);
             await _unitOfWork.GetRepositoryAsync<Te>().Insert(entity);
@@ -47,13 +47,13 @@ namespace Moonlimit.DroneAPI.Domain.Service
             return entity.Id;
         }
 
-        public async Task<int> Update(Tv view)
+        public async Task<Int64> Update(Tv view)
         {
             await _unitOfWork.GetRepositoryAsync<Te>().Update(view.Id, _mapper.Map<Te>(source: view));
             return await _unitOfWork.SaveAsync();
         }
 
-        public virtual async Task<int> Remove(int id)
+        public virtual async Task<Int64> Remove(Int64 id)
         {
             Te entity = await _unitOfWork.Context.Set<Te>().FindAsync(id);
             await _unitOfWork.GetRepositoryAsync<Te>().Delete(id);

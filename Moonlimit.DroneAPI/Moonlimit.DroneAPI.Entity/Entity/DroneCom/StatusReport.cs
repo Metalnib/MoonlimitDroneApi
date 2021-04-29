@@ -7,7 +7,7 @@ namespace Moonlimit.DroneAPI.Entity.DroneCom
     [Table("status_reports", Schema = "DroneCom")]
     public class StatusReport : BaseEntity
     {
-        public int DroneId { get; set; }
+        public Int64 DroneId { get; set; }
         public DateTime LastReportTime { get; set; }
         public bool Armed { get; set; }
         public bool Disabled { get; set; }

@@ -24,7 +24,7 @@ namespace Moonlimit.DroneAPI.Domain.Service
                 _mapper = mapper;
         }
 
-        public async Task<Tv> GetAccountWithUsers(int id)
+        public async Task<Tv> GetAccountWithUsers(Int64 id)
         {
             var a = await _unitOfWork.Context.Set<CompanyAccount>().Where(a => a.Id == id).Include(a => a.Users).FirstOrDefaultAsync();
             return _mapper.Map<Tv>(a);

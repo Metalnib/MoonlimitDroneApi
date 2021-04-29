@@ -20,7 +20,7 @@ namespace Moonlimit.DroneAPI.Domain
         public ICollection<string> Roles { get; set; }  //map from semicolumn delimited from Entity
         public bool IsActive { get; set; }
         public string Password { get; set; }
-        public int CompanyAccountId { get; set; }
+        public Int64 CompanyAccountId { get; set; }
 
         [JsonIgnore]  //to avoid circular serialization 
         public virtual CompanyAccountViewModel CompanyAccount { get; set; }

@@ -8,6 +8,7 @@ using Moonlimit.DroneAPI.Entity.Context;
 using Serilog;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Moonlimit.DroneAPI.Api.Controllers
 {
@@ -46,7 +47,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //get one
         [Authorize]
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Int64 id)
         {
             var item = _userService.GetOne(id);
             if (item == null)
@@ -56,6 +57,13 @@ namespace Moonlimit.DroneAPI.Api.Controllers
             }
 
             return Ok(item);
+        }
+
+        [Authorize]
+        [HttpGet("{id}")]
+        public IActionResult GetById(string id)
+        {
+            return GetById(Base32Convert.ToInt64(id));
         }
 
         //add
@@ -74,12 +82,12 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //update
         [Authorize(Roles = UpdateAccessRoles)]
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] UserViewModel user)
+        public IActionResult Update(Int64 id, [FromBody] UserViewModel user)
         {
             if (user == null || user.Id != id)
                 return BadRequest();
 
-            int retVal = _userService.Update(user);
+            var retVal = _userService.Update(user);
             if (retVal == 0)
                 return StatusCode(304);  //Not Modified
             else if (retVal == -1)
@@ -88,18 +96,32 @@ namespace Moonlimit.DroneAPI.Api.Controllers
                 return Accepted(user);
         }
 
+        [Authorize(Roles = UpdateAccessRoles)]
+        [HttpPut("{id}")]
+        public IActionResult Update(string id, [FromBody] UserViewModel user)
+        {
+            return Update(Base32Convert.ToInt64(id),user);
+        }
+
         //delete
         [Authorize(Roles = FullAccessRoles)]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Int64 id)
         {
-            int retVal = _userService.Remove(id);
+            var retVal = _userService.Remove(id);
             if (retVal == 0)
                 return NotFound();  //Not Found 404
             else if (retVal == -1)
                 return StatusCode(412, "DbUpdateConcurrencyException");  //Precondition Failed  - concurrency
             else
                 return NoContent();   	     //No Content 204
+        }
+
+        [Authorize(Roles = FullAccessRoles)]
+        [HttpDelete("{id}")]
+        public IActionResult Delete(string id)
+        {
+            return Delete(Base32Convert.ToInt64(id));
         }
 
         

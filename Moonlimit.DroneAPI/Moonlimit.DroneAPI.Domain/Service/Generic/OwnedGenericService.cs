@@ -28,13 +28,13 @@ namespace Moonlimit.DroneAPI.Domain.Service
             var entities = _unitOfWork.GetRepository<Te>().GetQueryable(ClaimValidator.CanGet());
             return _mapper.Map<IEnumerable<Tv>>(source: entities);
         }
-        public virtual Tv GetOne(int id)
+        public virtual Tv GetOne(Int64 id)
         {
             var entity = _unitOfWork.GetRepository<Te>().GetOne(predicate: x => x.Id == id);
             return ClaimValidator.CanGet(entity) ? _mapper.Map<Tv>(source: entity) : null;
         }
 
-        public virtual int Add(Tv view)
+        public virtual Int64 Add(Tv view)
         {
             var entity = _mapper.Map<Te>(source: view);
             if (ClaimValidator.CanAdd(entity)) return -1;
@@ -43,7 +43,7 @@ namespace Moonlimit.DroneAPI.Domain.Service
             return entity.Id;
         }
 
-        public virtual int Update(Tv view)
+        public virtual Int64 Update(Tv view)
         {
             var entity = _mapper.Map<Te>(source: view);
             if (!ClaimValidator.CanUpdate(entity)) return -1;
@@ -52,7 +52,7 @@ namespace Moonlimit.DroneAPI.Domain.Service
         }
 
 
-        public virtual int Remove(int id)
+        public virtual Int64 Remove(Int64 id)
         {
             Te entity = _unitOfWork.Context.Set<Te>().Find(id);
             if (!ClaimValidator.CanRemove(entity)) return -1;

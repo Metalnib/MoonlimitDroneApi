@@ -9,6 +9,7 @@ using Serilog;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 namespace Moonlimit.DroneAPI.Api.Controllers
 {
@@ -47,7 +48,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //get one
         [Authorize]
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<IActionResult> GetById(Int64 id)
         {
             var item = await _userServiceAsync.GetOne(id);
             if (item == null)
@@ -74,12 +75,12 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //update
         [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] UserViewModel user)
+        public async Task<IActionResult> Update(Int64 id, [FromBody] UserViewModel user)
         {
             if (user == null || user.Id != id)
                 return BadRequest();
 
-            int retVal = await _userServiceAsync.Update(user);
+            var retVal = await _userServiceAsync.Update(user);
             if (retVal == 0)
                 return StatusCode(304);  //Not Modified
             else if (retVal == -1)
@@ -91,9 +92,9 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //delete
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(Int64 id)
         {
-            int retVal = await _userServiceAsync.Remove(id);
+            var retVal = await _userServiceAsync.Remove(id);
             if (retVal == 0)
                 return NotFound();  //Not Found 404
             else if (retVal == -1)

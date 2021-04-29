@@ -100,8 +100,8 @@ namespace JWT.Controllers
 
         private class UserModel
         {
-            public int Id { get; set; }
-            public int AccountId { get; set; }
+            public Int64 Id { get; set; }
+            public Int64 AccountId { get; set; }
             public string Name { get; set; }
             public string Email { get; set; }
             public DateTime Birthdate { get; set; }

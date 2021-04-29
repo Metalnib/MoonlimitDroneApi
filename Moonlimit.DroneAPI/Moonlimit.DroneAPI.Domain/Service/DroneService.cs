@@ -25,7 +25,7 @@ namespace Moonlimit.DroneAPI.Domain.Service
                 _mapper = mapper;
         }
         
-        public override int Add(Tv view)
+        public override Int64 Add(Tv view)
         {
             var entity = _mapper.Map<Te>(source: view);
             if(string.IsNullOrWhiteSpace(entity.Token)) entity.Token = Guid.NewGuid().ToString();

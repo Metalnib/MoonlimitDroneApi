@@ -31,6 +31,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using IdGen;
 using Moonlimit.DroneAPI.Entity;
 using Moonlimit.DroneAPI.Entity.Map;
 using Moonlimit.DroneAPI.Entity.DroneCom;
@@ -180,6 +181,14 @@ namespace Moonlimit.DroneAPI.Api
                 #endregion
 
                 #region "DI code"
+                //ID Generator
+                var epoch = new DateTime(2021, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+                // Create an ID with 40 (34 years) bits for timestamp, 11 for generator-id and 12 for sequence(4096 per ms)
+                var structure = new IdStructure(40, 11, 12);
+                // Prepare options
+                var options = new IdGeneratorOptions(structure, new DefaultTimeSource(epoch), SequenceOverflowStrategy.SpinWait);
+                services.AddSingleton(new IdGenerator(0, options)); //Gen0 is for testing
+                
                 //general unitofwork injections
                 services.AddTransient<IUnitOfWork, UnitOfWork>();
 

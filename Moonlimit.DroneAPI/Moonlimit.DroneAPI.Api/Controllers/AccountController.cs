@@ -7,6 +7,7 @@ using Moonlimit.DroneAPI.Entity;
 using Moonlimit.DroneAPI.Entity.Context;
 using Serilog;
 using System.Collections.Generic;
+using System;
 using System.Linq;
 using System.Security.Claims;
 
@@ -46,7 +47,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //get one
         [Authorize]
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(Int64 id)
         {
             var item = _companyAccountService.GetOne(id);
             if (item == null)
@@ -87,12 +88,12 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //update
         [Authorize(Roles = "Administrator")]
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] CompanyAccountViewModel companyAccount)
+        public IActionResult Update(Int64 id, [FromBody] CompanyAccountViewModel companyAccount)
         {
             if (companyAccount == null || companyAccount.Id != id)
                 return BadRequest();
 
-            int retVal = _companyAccountService.Update(companyAccount);
+            Int64 retVal = _companyAccountService.Update(companyAccount);
             if (retVal == 0)
                 return StatusCode(304);  //Not Modified
             else if (retVal == -1)
@@ -104,9 +105,9 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         //delete 
         [Authorize(Roles = "Administrator")]
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(Int64 id)
         {
-            int retVal = _companyAccountService.Remove(id);
+            Int64 retVal = _companyAccountService.Remove(id);
             if (retVal == 0)
                 return NotFound();  //Not Found 404
             else if (retVal == -1)
