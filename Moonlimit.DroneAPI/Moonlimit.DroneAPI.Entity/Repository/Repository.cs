@@ -14,7 +14,7 @@ namespace Moonlimit.DroneAPI.Entity.Repository
     /// General repository class
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly IUnitOfWork _unitOfWork;
         public Repository(IUnitOfWork unitOfWork)
@@ -48,7 +48,9 @@ namespace Moonlimit.DroneAPI.Entity.Repository
         }
         public void Insert(T entity)
         {
-            if (entity != null) _unitOfWork.Context.Set<T>().Add(entity);
+            if (entity == default) return;
+            if (entity.Id <= 0) entity.Id = _unitOfWork.Generator.CreateId();
+            _unitOfWork.Context.Set<T>().Add(entity);
         }
         public void Update(object id, T entity)
         {

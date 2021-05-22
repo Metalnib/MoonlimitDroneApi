@@ -1,7 +1,7 @@
-using System;
-
 namespace Moonlimit.DroneAPI.Domain.Service
 {
+    using System;
+    using IdGen;
     using AutoMapper;
     using Moonlimit.DroneAPI.Entity;
     using Moonlimit.DroneAPI.Entity.UnitofWork;
@@ -17,7 +17,7 @@ namespace Moonlimit.DroneAPI.Domain.Service
         where Te : Drone
     {
         
-        public DroneService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> validator):base(unitOfWork,mapper,validator)
+        public DroneService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> validator, IdGenerator generator):base(unitOfWork,mapper,validator, generator)
         {
             if (_unitOfWork == null)
                 _unitOfWork = unitOfWork;

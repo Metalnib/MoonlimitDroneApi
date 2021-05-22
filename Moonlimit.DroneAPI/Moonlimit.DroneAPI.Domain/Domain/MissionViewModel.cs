@@ -2,8 +2,7 @@ namespace Moonlimit.DroneAPI.Domain
 {
     public class MissionViewModel : OwnedDomain
     {
-        public string Name { get; set; } 
-        public int UserId { get; set; } 
+        public string Name { get; set; }
         public int MissionAreaId { get; set; } 
         public int TypeCode { get; set; } 
         public float TargetAltitude { get; set; } 

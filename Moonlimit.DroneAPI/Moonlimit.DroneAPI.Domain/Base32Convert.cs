@@ -2,6 +2,9 @@ using System;
 
 namespace Moonlimit.DroneAPI.Domain
 {
+    /// <summary>
+    /// Base32 Encoder-Decoder Crockford charset
+    /// </summary>
     public static class Base32Convert
     {
         private static readonly byte[] ValueMappingByte = {
@@ -19,7 +22,7 @@ namespace Moonlimit.DroneAPI.Domain
             0
         };
         private static readonly string _encode32Chars =      "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
-        private static readonly char[] _encode32CharsArray = "0123456789ABCDEFGHJKMNPQRSTVWXYZ".ToCharArray();
+        private static readonly char[] _encode32CharsArray = _encode32Chars.ToCharArray();
         
         public static string ToString(long input)
         {

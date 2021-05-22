@@ -7,22 +7,7 @@ namespace Moonlimit.DroneAPI.Domain
 {
     public class BaseDomain
     {
-        public Int64 Id { get; set; }
-        private string _lid;
-        public string LId
-        {
-            get
-            {
-                if (string.IsNullOrEmpty(_lid))
-                    _lid = Base32Convert.ToString(Id);
-                return _lid;
-            }
-            set
-            {
-                Id = Base32Convert.ToInt64(value);
-                _lid = value;
-            }
-        }
+        public IdType Id { get; set; }
 
         [MapTo("xmin")]
         public uint RowVersion { get; set; }

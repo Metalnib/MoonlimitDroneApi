@@ -16,7 +16,7 @@ namespace Moonlimit.DroneAPI.Entity.Repository
     /// General repository class async
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class RepositoryAsync<T> : IRepositoryAsync<T> where T : class
+    public class RepositoryAsync<T> : IRepositoryAsync<T> where T : BaseEntity
     {
         private readonly IUnitOfWork _unitOfWork;
         public RepositoryAsync(IUnitOfWork unitOfWork)
@@ -40,7 +40,10 @@ namespace Moonlimit.DroneAPI.Entity.Repository
         public async Task Insert(T entity)
         {
             if (entity != null)
+            {
+                if (entity.Id <= 0) entity.Id = _unitOfWork.Generator.CreateId();
                 await _unitOfWork.Context.Set<T>().AddAsync(entity);
+            }
         }
         public async Task Update(object id, T entity)
         {

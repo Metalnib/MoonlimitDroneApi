@@ -15,12 +15,14 @@ namespace Moonlimit.DroneAPI.Domain.Service
         protected IUnitOfWork _unitOfWork;
         protected IMapper _mapper;
         protected IClaimValidator<Te> ClaimValidator;
+        protected IdGen.IdGenerator _IdGen;
         
-        public OwnedGenericService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> claimValidator)
+        public OwnedGenericService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> claimValidator, IdGen.IdGenerator generator)
         {
             _unitOfWork = unitOfWork;
             _mapper = mapper;
             ClaimValidator = claimValidator;
+            _IdGen = generator;
         }
 
         public virtual IEnumerable<Tv> GetAll()
@@ -38,6 +40,7 @@ namespace Moonlimit.DroneAPI.Domain.Service
         {
             var entity = _mapper.Map<Te>(source: view);
             if (ClaimValidator.CanAdd(entity)) return -1;
+            if (entity.Id <= 0) entity.Id = _IdGen.CreateId();
             _unitOfWork.GetRepository<Te>().Insert(entity);
             _unitOfWork.Save();
             return entity.Id;

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using IdGen;
 
 namespace Moonlimit.DroneAPI.Domain.Service
 {
@@ -18,7 +19,7 @@ namespace Moonlimit.DroneAPI.Domain.Service
         where Te : Mission
     {
         
-        public MissionService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> validator):base(unitOfWork,mapper,validator)
+        public MissionService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> validator, IdGenerator generator):base(unitOfWork,mapper,validator, generator)
         {
             if (_unitOfWork == null)
                 _unitOfWork = unitOfWork;

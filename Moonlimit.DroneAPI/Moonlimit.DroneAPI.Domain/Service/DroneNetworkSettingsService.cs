@@ -4,6 +4,7 @@ namespace Moonlimit.DroneAPI.Domain.Service
     using Moonlimit.DroneAPI.Entity;
     using Moonlimit.DroneAPI.Entity.UnitofWork;
     using Moonlimit.DroneAPI.Entity.DroneCom;
+    using IdGen;
     
     /// <summary>
     ///
@@ -15,7 +16,7 @@ namespace Moonlimit.DroneAPI.Domain.Service
         where Te : DroneNetworkSettings
     {
         
-        public DroneNetworkSettingsService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> validator):base(unitOfWork,mapper,validator)
+        public DroneNetworkSettingsService(IUnitOfWork unitOfWork, IMapper mapper, IClaimValidator<Te> validator, IdGenerator generator):base(unitOfWork,mapper,validator, generator)
         {
             if (_unitOfWork == null)
                 _unitOfWork = unitOfWork;

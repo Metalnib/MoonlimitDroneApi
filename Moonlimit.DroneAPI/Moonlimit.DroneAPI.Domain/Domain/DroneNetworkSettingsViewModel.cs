@@ -2,7 +2,6 @@ namespace Moonlimit.DroneAPI.Domain
 {
     public class DroneNetworkSettingsViewModel : OwnedDomain
     {
-        public int UserId { get; set; } 
         public string NetworkInterface { get; set; } 
         public string SsId { get; set; } 
         public bool UseDhcp { get; set; } 

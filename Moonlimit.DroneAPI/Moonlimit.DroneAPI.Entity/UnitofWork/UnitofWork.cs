@@ -4,16 +4,18 @@ using Moonlimit.DroneAPI.Entity.Repository;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using IdGen;
 
 namespace Moonlimit.DroneAPI.Entity.UnitofWork
 {
     public interface IUnitOfWork : IDisposable
     {
 
-        IRepository<TEntity> GetRepository<TEntity>() where TEntity : class;
-        IRepositoryAsync<TEntity> GetRepositoryAsync<TEntity>() where TEntity : class;
+        IRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity;
+        IRepositoryAsync<TEntity> GetRepositoryAsync<TEntity>() where TEntity : BaseEntity;
 
         DefaultDbContext Context { get; }
+        IdGenerator Generator { get; }
         int Save();
         Task<int> SaveAsync();
     }
@@ -25,18 +27,20 @@ namespace Moonlimit.DroneAPI.Entity.UnitofWork
     public class UnitOfWork : IUnitOfWork
     {
         public DefaultDbContext Context { get; }
+        public IdGenerator Generator { get; }
 
         private Dictionary<Type, object> _repositoriesAsync;
         private Dictionary<Type, object> _repositories;
         private bool _disposed;
 
-        public UnitOfWork(DefaultDbContext context)
+        public UnitOfWork(DefaultDbContext context, IdGenerator generator)
         {
             Context = context;
             _disposed = false;
+            Generator = generator;
         }
 
-        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
+        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : BaseEntity
         {
             if (_repositories == null) _repositories = new Dictionary<Type, object>();
             var type = typeof(TEntity);
@@ -44,7 +48,7 @@ namespace Moonlimit.DroneAPI.Entity.UnitofWork
             return (IRepository<TEntity>)_repositories[type];
         }
 
-        public IRepositoryAsync<TEntity> GetRepositoryAsync<TEntity>() where TEntity : class
+        public IRepositoryAsync<TEntity> GetRepositoryAsync<TEntity>() where TEntity : BaseEntity
         {
             if (_repositories == null) _repositoriesAsync = new Dictionary<Type, object>();
             var type = typeof(TEntity);

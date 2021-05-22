@@ -15,6 +15,7 @@ namespace Moonlimit.DroneAPI.Api.Controllers
     [ApiVersion("1.0")]
     [Route("api/[controller]")]
     //[Route("api/v{version:apiVersion}/[controller]")]
+    //[Authorize]
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -27,7 +28,6 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         }
 
         //get all
-        [Authorize]
         [HttpGet]
         public IEnumerable<UserViewModel> GetAll()
         {
@@ -36,7 +36,6 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         }
         
         //get all active by username
-        [Authorize]
         [HttpGet("GetActiveByFirstName/{firstname}")]
         public IActionResult GetActiveByFirstName(string firstname)
         {
@@ -45,10 +44,10 @@ namespace Moonlimit.DroneAPI.Api.Controllers
         }
 
         //get one
-        [Authorize]
         [HttpGet("{id}")]
-        public IActionResult GetById(Int64 id)
+        public IActionResult GetById(IdType id)
         {
+            id = new IdType(22);
             var item = _userService.GetOne(id);
             if (item == null)
             {
@@ -59,15 +58,8 @@ namespace Moonlimit.DroneAPI.Api.Controllers
             return Ok(item);
         }
 
-        [Authorize]
-        [HttpGet("{id}")]
-        public IActionResult GetById(string id)
-        {
-            return GetById(Base32Convert.ToInt64(id));
-        }
-
         //add
-        [Authorize(Roles = FullAccessRoles)]
+        //[Authorize(Roles = FullAccessRoles)]
         [HttpPost]
         public IActionResult Create([FromBody] UserViewModel user)
         {

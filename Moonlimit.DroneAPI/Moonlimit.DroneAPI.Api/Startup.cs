@@ -183,10 +183,10 @@ namespace Moonlimit.DroneAPI.Api
                 #region "DI code"
                 //ID Generator
                 var epoch = new DateTime(2021, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-                // Create an ID with 40 (34 years) bits for timestamp, 11 for generator-id and 12 for sequence(4096 per ms)
-                var structure = new IdStructure(40, 11, 12);
+                // Create an ID with 31 (68 years if measured in seconds) bits for timestamp, 16 for generator-id and 16 for sequence(65536 per sec.)
+                var structure = new IdStructure(31, 16, 16);
                 // Prepare options
-                var options = new IdGeneratorOptions(structure, new DefaultTimeSource(epoch), SequenceOverflowStrategy.SpinWait);
+                var options = new IdGeneratorOptions(structure, new DefaultTimeSource(epoch, TimeSpan.FromSeconds(1.0)), SequenceOverflowStrategy.SpinWait);
                 services.AddSingleton(new IdGenerator(0, options)); //Gen0 is for testing
                 
                 //general unitofwork injections
